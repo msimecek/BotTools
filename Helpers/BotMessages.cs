@@ -26,5 +26,12 @@ namespace BotTools.Helpers
             message.ChannelData = new FacebookMessage(text, replies);
             await context.PostAsync(message);
         }
+        
+        public static async Task PostWithQuickRepliesAsync(this IDialogContext context, string text, (string Description, string Value) replies)
+        {
+            var message = context.MakeMessage();
+            message.AddKeyboardCard(text, new string[] { replies.Value }, new string[] { replies.Description });
+            await context.PostAsync(message);
+        }
     }
 }
